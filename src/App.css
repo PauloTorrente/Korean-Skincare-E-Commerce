@@ -1,0 +1,53 @@
+#root {
+  max-width: 1280px; /* The main container width */
+  margin: 0 auto; /* Center horizontally */
+  padding: 0; /* Remove extra padding */
+  text-align: center; /* Ensure proper alignment */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Raleway', sans-serif;
+  background-color: #F2F2F2;
+  color: #010326;
+}
+
+* {
+  box-sizing: border-box; /* Ensure padding and borders are included in element width and height */
+}
+
+button {
+  background-color: #010326;
+  color: #F2F2F2;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #94E9F2;
+  transform: translateY(-2px);
+}
+
+.product-card img {
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: auto;
+}
+
+.product-card img:hover {
+  transform: scale(1.05);
+}
+
+.product-card {
+  padding: 20px;
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(148, 233, 242, 0.2);
+}
