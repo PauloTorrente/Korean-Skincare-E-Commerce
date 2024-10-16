@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
-// import img1 from '../assets/gel_cream.png';
+import img1 from '../assets/gel_cream.png';
 import img2 from '../assets/serm(caja).jpg';
 import img3 from '../assets/8809572890581_2.jpg';
 import img4 from '../assets/8809572890581_1.jpg';
