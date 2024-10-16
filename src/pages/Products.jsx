@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 // Import images
 import richMoistSheetMask from '/src/assets/Richmoissoothing(bolsitafrente).jpg';
 import richMoistSerum from '/src/assets/Serum(fueradecaja).jpg';
-import waterGelCream from '/src/assets/gel_cream.png'; 
 import nourishingEyeButter from '/src/assets/8809572890581_1.jpg';
 import vitaminEMask from '/src/assets/freshlyjuicedemask(fueradecaja).jpg';
 import freePouch from '/src/assets/Logo.png';
@@ -91,12 +90,6 @@ const products = [
     reference: 'KLRISE',
     price: '€11.99',
     image: richMoistSerum,
-  },
-  {
-    name: 'FUNDAMENTAL WATER GEL CREAM',
-    reference: 'KLFUCR',
-    price: '€16.99',
-    image: waterGelCream,
   },
   {
     name: 'FUNDAMENTAL NOURISHING EYE BUTTER',
