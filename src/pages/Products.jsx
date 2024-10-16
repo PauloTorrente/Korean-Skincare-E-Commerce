@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 // Import images
 import richMoistSheetMask from '/src/assets/Richmoissoothing(bolsitafrente).jpg';
 import richMoistSerum from '/src/assets/Serum(fueradecaja).jpg';
-import waterGelCream from '/src/assets/gel_cream.png';
+import waterGelCream from '/src/assets/gel_cream.png'; 
 import nourishingEyeButter from '/src/assets/8809572890581_1.jpg';
 import vitaminEMask from '/src/assets/freshlyjuicedemask(fueradecaja).jpg';
 import freePouch from '/src/assets/Logo.png';

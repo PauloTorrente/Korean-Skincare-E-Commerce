@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 
 import img1 from '../assets/gel_cream.png';
@@ -96,6 +97,11 @@ const Home = () => {
       <FeaturedProducts>
         <h2>Productos Destacados</h2>
         <Swiper
+          modules={[Autoplay]} // Enable Autoplay module
+          autoplay={{
+            delay: 2500, // Delay between slides in milliseconds
+            disableOnInteraction: false, // Continue autoplay after user interactions
+          }}
           spaceBetween={10}
           slidesPerView={1}
           breakpoints={{
