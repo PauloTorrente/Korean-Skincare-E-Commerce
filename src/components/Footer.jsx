@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const FooterContainer = styled.footer`
-  background-color: #010326;
-  color: #F2F2F2;
+  background-color: #FFB6C1;
+  color: #D5006D;  /* Darker pink for better contrast */
   padding: 2rem;
   text-align: center;
 
@@ -13,7 +14,7 @@ const FooterContainer = styled.footer`
 
     a {
       margin: 0 1rem;
-      color: #F2F2F2;
+      color: #D5006D;  /* Ensure icons also match */
       text-decoration: none;
 
       &:hover {
@@ -29,20 +30,36 @@ const FooterContainer = styled.footer`
   }
 `;
 
+const iconVariants = {
+  hover: { scale: 1.2, color: '#94E9F2', transition: { duration: 0.3 } },
+};
+
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>&copy; 2023 Cuidado Coreano. Todos los derechos reservados.</p>
+      <p>Bienestar en la piel y en el alma.</p>
       <div>
-        <a href="https://facebook.com">
+        <motion.a
+          href="https://facebook.com"
+          whileHover="hover"
+          variants={iconVariants}
+        >
           <FaFacebook size={24} />
-        </a>
-        <a href="https://twitter.com">
+        </motion.a>
+        <motion.a
+          href="https://twitter.com"
+          whileHover="hover"
+          variants={iconVariants}
+        >
           <FaTwitter size={24} />
-        </a>
-        <a href="https://instagram.com">
+        </motion.a>
+        <motion.a
+          href="https://instagram.com"
+          whileHover="hover"
+          variants={iconVariants}
+        >
           <FaInstagram size={24} />
-        </a>
+        </motion.a>
       </div>
     </FooterContainer>
   );

@@ -8,11 +8,13 @@ const ContactContainer = styled.div`
 
   h1 {
     font-size: 2.5rem;
+    color: #010326; /* Dark text for the header */
   }
 
   p {
     font-size: 1.2rem;
     margin: 1rem 0;
+    color: #666; /* Softer gray for paragraph text */
   }
 
   form {
@@ -25,21 +27,28 @@ const ContactContainer = styled.div`
       padding: 0.8rem;
       width: 100%;
       max-width: 400px;
-      border: 1px solid #ccc;
+      border: 1px solid #94E9F2; /* Light blue border to match the theme */
       border-radius: 4px;
+      background-color: #F2F2F2; /* Light background for form elements */
+      color: #010326; /* Dark text inside input fields */
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #666; /* Placeholder text color for better readability */
     }
 
     button {
       margin-top: 1rem;
       padding: 0.8rem 2rem;
-      background-color: #646cff;
-      color: white;
+      background-color: #94E9F2; /* Light blue button to match the palette */
+      color: #010326; /* Dark text for button */
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-weight: bold;
 
       &:hover {
-        background-color: #535bf2;
+        background-color: #74d1de; /* Darker shade of blue on hover */
       }
     }
   }
@@ -56,7 +65,12 @@ const ContactContainer = styled.div`
 
 const Contact = () => {
   return (
-    <ContactContainer as={motion.div} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+    <ContactContainer
+      as={motion.div}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <h1>Contacto</h1>
       <p>¿Tienes alguna pregunta? Envíanos un mensaje y nos pondremos en contacto contigo pronto.</p>
       <form>

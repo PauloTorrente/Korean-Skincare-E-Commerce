@@ -32,10 +32,9 @@ const Hero = styled.div`
 
 const HeroText = styled.div`
   h1 {
-    font-size: 0%;
-    margin: 0;
-    font-family: 'Raleway', sans-serif;
-    color: #010326;
+    font-size: 3rem;
+    font-family: 'Belgiano Serif', serif;
+    color: #1E1E1E; /* Charcoal color in harmony with pastel pink */
 
     @media (max-width: 768px) {
       font-size: 1.9rem;
@@ -45,14 +44,14 @@ const HeroText = styled.div`
   a {
     margin-top: 2rem;  
     padding: 0.8rem 2rem;
-    background-color: #94E9F2;
+    background-color: #F2F2F2;
     color: #010326;
     text-decoration: none;
     border-radius: 8px;
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #F2F2F2;
+      background-color: #FFB6C1;
     }
   }
 `;
@@ -97,10 +96,10 @@ const Home = () => {
       <FeaturedProducts>
         <h2>Productos Destacados</h2>
         <Swiper
-          modules={[Autoplay]} // Enable Autoplay module
+          modules={[Autoplay]} 
           autoplay={{
-            delay: 2500, // Delay between slides in milliseconds
-            disableOnInteraction: false, // Continue autoplay after user interactions
+            delay: 2500, 
+            disableOnInteraction: false, 
           }}
           spaceBetween={10}
           slidesPerView={1}

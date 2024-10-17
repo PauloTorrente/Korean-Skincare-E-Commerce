@@ -14,12 +14,12 @@ import unscentedToner from '/src/assets/8809572890901_2.jpg';
 // Styled components
 const ProductsContainer = styled.div`
   padding: 2rem;
-  background-color: #F2F2F2;
+  background-color: #F2F2F2; /* Light background for main container */
 
   h1 {
     font-size: 2rem;
     text-align: center;
-    color: #010326;
+    color: #010326; /* Dark text for headings */
   }
 
   .products-grid {
@@ -36,6 +36,11 @@ const ProductsContainer = styled.div`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     padding: 1rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
   }
 
   .product-card img {
@@ -43,23 +48,26 @@ const ProductsContainer = styled.div`
     height: auto;
     object-fit: cover;
     margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 2px solid #94E9F2; /* Light blue border around images */
   }
 
   .product-card h2 {
     font-size: 1.2rem;
-    color: #010326;
+    color: #010326; /* Dark text for product titles */
   }
 
   .product-card p {
     font-size: 1rem;
-    color: #010326;
+    color: #666; /* Softer gray for reference text */
   }
 
   .product-card span {
     display: block;
     font-size: 1.1rem;
-    color: #94E9F2;
+    color: #94E9F2; /* Light blue for price */
     margin-top: 0.5rem;
+    font-weight: bold;
   }
 
   @media (max-width: 768px) {
