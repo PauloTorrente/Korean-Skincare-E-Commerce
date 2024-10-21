@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../assets/logo.png'; // Asegúrate de tener la imagen del logo
+import logo from '../assets/logo.png';
 
 const NavbarContainer = styled.nav`
   background-color: #FFB6C1;
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between; /* Logo a la izquierda, enlaces centrados */
+  justify-content: space-between;
   align-items: center;
 
   .logo {
@@ -15,7 +15,7 @@ const NavbarContainer = styled.nav`
     align-items: center;
 
     img {
-      width: 50px; /* Ajusta el tamaño del logo */
+      width: 50px;
       height: auto;
     }
   }
@@ -26,16 +26,16 @@ const NavbarContainer = styled.nav`
     align-items: center;
 
     a {
-      color: #D5006D; /* Color rosa oscuro para mejor contraste */
+      color: #D5006D; 
       text-decoration: none;
-      margin: 0 1.5rem; /* Espaciado entre los enlaces */
+      margin: 0 1.5rem; 
     }
   }
 
   @media (max-width: 768px) {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between; /* Mantiene el logo a la izquierda y enlaces en fila */
+    justify-content: space-between; 
 
     .nav-links {
       a {
