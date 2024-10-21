@@ -1,27 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from '../assets/logo.png'; // Asegúrate de tener la imagen del logo
 
 const NavbarContainer = styled.nav`
   background-color: #FFB6C1;
   padding: 1rem 2rem;
   display: flex;
-  justify-content: center; /* Centers the navbar links horizontally */
+  justify-content: space-between; /* Logo a la izquierda, enlaces centrados */
   align-items: center;
 
-  a {
-    color: #D5006D; /* Darker pink for better contrast */
-    text-decoration: none;
-    margin: 0 1.5rem; /* Adjusted margin for even spacing */
+  .logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 50px; /* Ajusta el tamaño del logo */
+      height: auto;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      color: #D5006D; /* Color rosa oscuro para mejor contraste */
+      text-decoration: none;
+      margin: 0 1.5rem; /* Espaciado entre los enlaces */
+    }
   }
 
   @media (max-width: 768px) {
-    flex-direction: row; /* Ensures it remains horizontal even on mobile */
-    flex-wrap: wrap; /* Wraps content if space is tight */
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Mantiene el logo a la izquierda y enlaces en fila */
 
-    a {
-      margin: 0.5rem 1rem; /* Adjusted margin for mobile */
+    .nav-links {
+      a {
+        margin: 0.5rem 1rem;
+      }
     }
   }
 `;
@@ -29,10 +48,16 @@ const NavbarContainer = styled.nav`
 const Navbar = () => {
   return (
     <NavbarContainer>
-      <Link to="/">Inicio</Link>
-      <Link to="/products">Productos</Link>
-      <Link to="/about">Sobre Nosotros</Link>
-      <Link to="/contact">Contacto</Link>
+      <div className="logo">
+        <Link to="/">
+          <img src={logo} alt="Logo" />
+        </Link>
+      </div>
+      <div className="nav-links">
+        <Link to="/products">Productos</Link>
+        <Link to="/about">Sobre Nosotros</Link>
+        <Link to="/contact">Contacto</Link>
+      </div>
     </NavbarContainer>
   );
 };

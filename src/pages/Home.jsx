@@ -90,11 +90,11 @@ const Home = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       <Hero>
         <HeroText>
-          <h1>Cuidado Coreano para tu Alma</h1>
+          <h1></h1>
         </HeroText>
       </Hero>
       <FeaturedProducts>
-        <h2>Productos Destacados</h2>
+        <h2>Cuidado Coreano para tu Alma</h2>
         <Swiper
           modules={[Autoplay]} 
           autoplay={{
