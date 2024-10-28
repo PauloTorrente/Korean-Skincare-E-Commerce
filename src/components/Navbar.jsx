@@ -1,128 +1,112 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from '../assets/Logo.png';
+import { FaBars } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-import 'swiper/swiper-bundle.css';
 
-import img1 from '../assets/gel_cream.png';
-import img2 from '../assets/serm(caja).jpg';
-import img3 from '../assets/8809572890581_2.jpg';
-import img4 from '../assets/8809572890581_1.jpg';
-import img5 from '../assets/freshlyjuicedemask(caja).jpg';
-import img6 from '../assets/freshlyjuicedemask(fueradecaja).jpg';
-import heroImage from '../assets/Heroico.jpg';
-
-const Hero = styled.div`
-  background-image: url(${heroImage});
-  background-size: cover;
-  background-position: center;
-  height: 60vh;
+const NavbarContainer = styled.nav`
+  background-color: #FFB6C1;
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  color: #F2F2F2;
-  text-align: center;
+  position: relative;
 
-  @media (max-width: 768px) {
-    height: 50vh;
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    img {
+      width: 70px;
+      height: auto;
+    }
   }
-`;
 
-const HeroText = styled.div`
-  margin-top: 1rem;
-  text-align: center;
+  .nav-links {
+    display: none;
+  }
 
-  h1 {
-    font-size: 3rem;
-    font-family: 'Belgiano Serif', serif;
-    color: #D5006D; /* Dark pink color for consistency */
-    margin-bottom: 0.5rem;
+  .hamburger {
+    font-size: 2rem;
+    cursor: pointer;
+    display: none;
 
     @media (max-width: 768px) {
-      font-size: 1.9rem;
+      display: block;
+      position: relative;
     }
   }
 `;
 
-const FeaturedProducts = styled.div`
+const MotionMenu = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  background-color: #FFB6C1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  z-index: 10;
   padding: 2rem;
-  text-align: center;
-  background-color: #FFB6C1; /* Light pink background for consistency */
-  color: #010326; /* Dark color for text contrast */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 
-  h2 {
+  a {
+    color: #D5006D;
+    text-decoration: none;
+    margin: 1rem 0;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .menu-close {
+    font-size: 1.5rem;
+    cursor: pointer;
+    text-align: right;
+  }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
     margin: 1.5rem 0;
-    color: #D5006D; /* Dark pink color for titles */
   }
 `;
 
-const ProductImage = styled.img`
-  width: 100%;
-  max-width: 200px;
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  @media (max-width: 768px) {
-    max-width: 150px;
-  }
-`;
-
-const ProductDescription = styled.p`
-  color: #5C5C5C; /* Slightly dark gray for better readability */
-`;
-
-const Home = () => {
-  const products = [
-    { id: 1, name: 'RICH MOIST SOOTHING TENCEL SHEET MASK', image: img1, description: 'Mascarilla facial nutritiva', price: '€1.99' },
-    { id: 2, name: 'RICH MOIST SOOTHING SERUM', image: img2, description: 'Sérum anti-envejecimiento', price: '€11.99' },
-    { id: 3, name: 'FUNDAMENTAL WATER GEL CREAM', image: img3, description: 'Crema de gel hidratante', price: '€16.99' },
-    { id: 4, name: 'FUNDAMENTAL NOURISHING EYE BUTTER', image: img4, description: 'Mantequilla nutritiva para los ojos', price: '€13.49' },
-    { id: 5, name: 'FRESHLY JUICED VITAMIN E MASK', image: img5, description: 'Mascarilla de vitamina E', price: '€15.49' },
-    { id: 6, name: 'GENTLE BLACK DEEP CLEANSING OIL', image: img6, description: 'Aceite limpiador profundo', price: '€12.49' },
-  ];
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-      <Hero />
-      <HeroText>
-        <h1>Cuidado Coreano para tu Alma</h1>
-      </HeroText>
-      <FeaturedProducts>
-        <Swiper
-          modules={[Autoplay]}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          spaceBetween={10}
-          slidesPerView={1}
-          breakpoints={{
-            768: {
-              slidesPerView: 2,
-            },
-            1024: {
-              slidesPerView: 3,
-            },
-          }}
+    <NavbarContainer>
+      <div className="hamburger" onClick={toggleMenu}>
+        <FaBars />
+      </div>
+      <div className="logo">
+        <Link to="/">
+          <img src={logo} alt="Logo" />
+        </Link>
+      </div>
+
+      {isOpen && (
+        <MotionMenu
+          initial={{ x: '-100%' }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.5 }}
+          exit={{ x: '-100%' }}
         >
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <ProductImage src={product.image} alt={product.name} />
-                <h2>{product.name}</h2>
-                <ProductDescription>{product.description}</ProductDescription>
-                <p>Precio: {product.price}</p>
-              </motion.div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </FeaturedProducts>
-    </motion.div>
+          <div className="menu-close" onClick={toggleMenu}>✕</div>
+          <Link to="/products" onClick={toggleMenu}>Productos</Link>
+          <Link to="/about" onClick={toggleMenu}>Sobre Nosotros</Link>
+          <Link to="/contact" onClick={toggleMenu}>Contacto</Link>
+        </MotionMenu>
+      )}
+    </NavbarContainer>
   );
 };
 
-export default Home;
+export default Navbar;
