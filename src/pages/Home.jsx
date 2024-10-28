@@ -31,27 +31,17 @@ const Hero = styled.div`
 `;
 
 const HeroText = styled.div`
+  margin-top: 1rem;
+  text-align: center;
+
   h1 {
     font-size: 3rem;
     font-family: 'Belgiano Serif', serif;
-    color: #1E1E1E; /* Charcoal color in harmony with pastel pink */
+    color: #1E90FF; /* Azul para criar contraste */
+    margin-bottom: 0.5rem;
 
     @media (max-width: 768px) {
       font-size: 1.9rem;
-    }
-  }
-
-  a {
-    margin-top: 2rem;  
-    padding: 0.8rem 2rem;
-    background-color: #F2F2F2;
-    color: #010326;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #FFB6C1;
     }
   }
 `;
@@ -59,11 +49,26 @@ const HeroText = styled.div`
 const FeaturedProducts = styled.div`
   padding: 2rem;
   text-align: center;
-  background-color: #F2F2F2;
+  background-color: #F2F2F2; /* Cor neutra para destacar os produtos */
+  color: #010326; /* Cor escura para contraste */
 
   h2 {
-    margin: 2rem 0;
-    color: #010326;
+    margin: 1.5rem 0;
+    color: #D5006D; /* Rosa escuro para manter a consistência */
+  }
+`;
+
+const ProductCard = styled(motion.div)`
+  background-color: #FFFFFF; /* Fundo branco para destacar cada card */
+  border: 1px solid #E0E0E0; /* Bordas suaves */
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
   }
 `;
 
@@ -74,6 +79,15 @@ const ProductImage = styled.img`
   @media (max-width: 768px) {
     max-width: 150px;
   }
+`;
+
+const ProductDescription = styled.p`
+  color: #5C5C5C; /* Cinza suave para melhor legibilidade */
+`;
+
+const PriceTag = styled.p`
+  color: #1E90FF; /* Azul para destacar o preço */
+  font-weight: bold;
 `;
 
 const Home = () => {
@@ -88,18 +102,16 @@ const Home = () => {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-      <Hero>
-        <HeroText>
-          <h1></h1>
-        </HeroText>
-      </Hero>
+      <Hero />
+      <HeroText>
+        <h1>Cuidado Coreano para tu piel y tu Alma</h1>
+      </HeroText>
       <FeaturedProducts>
-        <h2>Cuidado Coreano para tu Alma</h2>
         <Swiper
-          modules={[Autoplay]} 
+          modules={[Autoplay]}
           autoplay={{
-            delay: 2500, 
-            disableOnInteraction: false, 
+            delay: 2500,
+            disableOnInteraction: false,
           }}
           spaceBetween={10}
           slidesPerView={1}
@@ -114,16 +126,16 @@ const Home = () => {
         >
           {products.map((product) => (
             <SwiperSlide key={product.id}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.5 }} 
+              <ProductCard
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
               >
                 <ProductImage src={product.image} alt={product.name} />
                 <h2>{product.name}</h2>
-                <p>{product.description}</p>
-                <p>Precio: {product.price}</p>
-              </motion.div>
+                <ProductDescription>{product.description}</ProductDescription>
+                <PriceTag>Precio: {product.price}</PriceTag>
+              </ProductCard>
             </SwiperSlide>
           ))}
         </Swiper>
