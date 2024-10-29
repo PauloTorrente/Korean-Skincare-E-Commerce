@@ -10,16 +10,18 @@ import vitaminEMask from '/src/assets/freshlyjuicedemask(fueradecaja).jpg';
 import freePouch from '/src/assets/Logo.png';
 import cleansingOil from '/src/assets/8809115025258_2.jpg';
 import unscentedToner from '/src/assets/8809572890901_2.jpg';
+import newProduct1 from '/src/assets/14.jpg';
+import newProduct2 from '/src/assets/18.jpg';
 
 // Styled components
 const ProductsContainer = styled.div`
   padding: 2rem;
-  background-color: #F2F2F2; /* Light background for main container */
+  background-color: #F2F2F2; /* Fondo claro para el contenedor principal */
 
   h1 {
     font-size: 2rem;
     text-align: center;
-    color: #010326; /* Dark text for headings */
+    color: #010326; /* Color oscuro para los encabezados */
   }
 
   .products-grid {
@@ -49,23 +51,23 @@ const ProductsContainer = styled.div`
     object-fit: cover;
     margin-bottom: 1rem;
     border-radius: 8px;
-    border: 2px solid #94E9F2; /* Light blue border around images */
+    border: 2px solid #94E9F2; /* Borde azul claro alrededor de las imágenes */
   }
 
   .product-card h2 {
     font-size: 1.2rem;
-    color: #010326; /* Dark text for product titles */
+    color: #010326; /* Color oscuro para los títulos de los productos */
   }
 
   .product-card p {
     font-size: 1rem;
-    color: #666; /* Softer gray for reference text */
+    color: #666; /* Gris suave para el texto de referencia */
   }
 
   .product-card span {
     display: block;
     font-size: 1.1rem;
-    color: #94E9F2; /* Light blue for price */
+    color: #94E9F2; /* Azul claro para el precio */
     margin-top: 0.5rem;
     font-weight: bold;
   }
@@ -85,7 +87,7 @@ const ProductsContainer = styled.div`
   }
 `;
 
-// Products data
+// Datos de productos
 const products = [
   {
     name: 'RICH MOIST SOOTHING TENCEL SHEET MASK',
@@ -100,22 +102,10 @@ const products = [
     image: richMoistSerum,
   },
   {
-    name: 'FUNDAMENTAL NOURISHING EYE BUTTER',
-    reference: 'KLFUEY',
-    price: '€13.49',
-    image: nourishingEyeButter,
-  },
-  {
     name: 'FRESHLY JUICED VITAMIN E MASK',
     reference: 'KLIVMA',
     price: '€15.49',
     image: vitaminEMask,
-  },
-  {
-    name: 'FREE POUCH SAMPLES in all orders!',
-    reference: 'OTPOSA',
-    price: '€0.00',
-    image: freePouch,
   },
   {
     name: 'GENTLE BLACK DEEP CLEANSING OIL',
@@ -129,8 +119,21 @@ const products = [
     price: '€11.99',
     image: unscentedToner,
   },
+  {
+    name: 'Fundamental Nourishing Eye Butter',
+    reference: 'NEWPROD1',
+    price: '€14.99',
+    image: newProduct1,
+  },
+  {
+    name: 'Gentle Black Deep Cleansing Oil',
+    reference: 'NEWPROD2',
+    price: '€18.99',
+    image: newProduct2,
+  },
 ];
 
+// Products page
 const Products = () => {
   return (
     <ProductsContainer>
@@ -140,9 +143,9 @@ const Products = () => {
           <motion.div
             className="product-card"
             key={index}
-            initial={{ opacity: 0, y: 20 }} // Start with opacity 0 and a slight upward position
-            animate={{ opacity: 1, y: 0 }} // Animate to opacity 1 and original position
-            transition={{ duration: 0.5, delay: index * 0.1 }} // Delay for staggered effect
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5, delay: index * 0.1 }} 
           >
             <img src={product.image} alt={product.name} />
             <h2>{product.name}</h2>

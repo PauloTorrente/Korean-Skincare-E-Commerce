@@ -13,6 +13,8 @@ import img4 from '../assets/8809572890581_1.jpg';
 import img5 from '../assets/freshlyjuicedemask(caja).jpg';
 import img6 from '../assets/freshlyjuicedemask(fueradecaja).jpg';
 import heroImage from '../assets/Heroico.jpg';
+import newProduct1 from '../assets/14.jpg';
+import newProduct2 from '../assets/18.jpg';
 
 const Hero = styled.div`
   background-image: url(${heroImage});
@@ -37,7 +39,7 @@ const HeroText = styled.div`
   h1 {
     font-size: 3rem;
     font-family: 'Belgiano Serif', serif;
-    color: #1E90FF; /* Azul para criar contraste */
+    color: #1E90FF; /* Azul para crear contraste */
     margin-bottom: 0.5rem;
 
     @media (max-width: 768px) {
@@ -49,18 +51,18 @@ const HeroText = styled.div`
 const FeaturedProducts = styled.div`
   padding: 2rem;
   text-align: center;
-  background-color: #F2F2F2; /* Cor neutra para destacar os produtos */
-  color: #010326; /* Cor escura para contraste */
+  background-color: #F2F2F2; /* Fondo neutro para destacar los productos */
+  color: #010326; /* Texto oscuro para contraste */
 
   h2 {
     margin: 1.5rem 0;
-    color: #D5006D; /* Rosa escuro para manter a consistência */
+    color: #D5006D; /* Rosa oscuro para consistencia */
   }
 `;
 
 const ProductCard = styled(motion.div)`
-  background-color: #FFFFFF; /* Fundo branco para destacar cada card */
-  border: 1px solid #E0E0E0; /* Bordas suaves */
+  background-color: #FFFFFF;
+  border: 1px solid #E0E0E0;
   border-radius: 8px;
   padding: 1rem;
   margin: 0.5rem;
@@ -82,22 +84,19 @@ const ProductImage = styled.img`
 `;
 
 const ProductDescription = styled.p`
-  color: #5C5C5C; /* Cinza suave para melhor legibilidade */
+  color: #5C5C5C;
 `;
 
 const PriceTag = styled.p`
-  color: #1E90FF; /* Azul para destacar o preço */
+  color: #1E90FF;
   font-weight: bold;
 `;
 
 const Home = () => {
   const products = [
-    { id: 1, name: 'RICH MOIST SOOTHING TENCEL SHEET MASK', image: img1, description: 'Mascarilla facial nutritiva', price: '€1.99' },
-    { id: 2, name: 'RICH MOIST SOOTHING SERUM', image: img2, description: 'Sérum anti-envejecimiento', price: '€11.99' },
-    { id: 3, name: 'FUNDAMENTAL WATER GEL CREAM', image: img3, description: 'Crema de gel hidratante', price: '€16.99' },
-    { id: 4, name: 'FUNDAMENTAL NOURISHING EYE BUTTER', image: img4, description: 'Mantequilla nutritiva para los ojos', price: '€13.49' },
-    { id: 5, name: 'FRESHLY JUICED VITAMIN E MASK', image: img5, description: 'Mascarilla de vitamina E', price: '€15.49' },
     { id: 6, name: 'GENTLE BLACK DEEP CLEANSING OIL', image: img6, description: 'Aceite limpiador profundo', price: '€12.49' },
+    { id: 7, name: 'Fundamental Nourishing Eye Butter', image: newProduct1, description: 'Mantequilla nutritiva para ojos', price: '€14.99' },
+    { id: 8, name: 'Gentle Black Deep Cleansing Oil', image: newProduct2, description: 'Aceite de limpieza profunda', price: '€18.99' },
   ];
 
   return (
