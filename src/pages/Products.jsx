@@ -10,6 +10,8 @@ import vitaminEMask from '/src/assets/freshlyjuicedemask(fueradecaja).jpg';
 import freePouch from '/src/assets/Logo.png';
 import cleansingOil from '/src/assets/8809115025258_2.jpg';
 import unscentedToner from '/src/assets/8809572890901_2.jpg';
+import Eyeawaeking from '/src/assets/Funamental eye awakening gel.jpg';
+import Watergel from '/src/assets/Funamental eye awakening gel.jpg';
 import newProduct1 from '/src/assets/14.jpg';
 import newProduct2 from '/src/assets/18.jpg';
 
@@ -19,9 +21,9 @@ const ProductsContainer = styled.div`
   background-color: #F2F2F2; /* Fondo claro para el contenedor principal */
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.3rem;
     text-align: center;
-    color: #010326; /* Color oscuro para los encabezados */
+    color: #010326; 
   }
 
   .products-grid {
@@ -94,6 +96,18 @@ const products = [
     reference: 'KLIRMA',
     price: '€1.99',
     image: richMoistSheetMask,
+  },
+  {
+    name: 'RICH MOIST SOOTHING TENCEL SHEET MASK',
+    reference: 'KLIRMA',
+    price: '€12.99',
+    image: Eyeawaeking,
+  },
+  {
+    name: 'Fundamental Eye Awakening Gel',
+    reference: 'KLIVMA',
+    price: '€12.49',
+    image: Eyeawaeking
   },
   {
     name: 'RICH MOIST SOOTHING SERUM',

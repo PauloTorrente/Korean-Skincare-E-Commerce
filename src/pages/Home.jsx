@@ -24,8 +24,9 @@ const Hero = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #F2F2F2;
+  color: #F9F9F9;
   text-align: center;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
     height: 50vh;
@@ -38,12 +39,12 @@ const HeroText = styled.div`
 
   h1 {
     font-size: 3rem;
-    font-family: 'Belgiano Serif', serif;
-    color: #1E90FF; /* Azul para crear contraste */
+    font-family: 'Playfair Display', serif; /* Fuente elegante */
+    color: #D47294; /* Rosa pálido */
     margin-bottom: 0.5rem;
 
     @media (max-width: 768px) {
-      font-size: 1.9rem;
+      font-size: 1.5rem;
     }
   }
 `;
@@ -51,12 +52,13 @@ const HeroText = styled.div`
 const FeaturedProducts = styled.div`
   padding: 2rem;
   text-align: center;
-  background-color: #F2F2F2; /* Fondo neutro para destacar los productos */
-  color: #010326; /* Texto oscuro para contraste */
+  background-color: #FDFDFD; /* Fondo neutro para destacar los productos */
+  color: #333333; /* Texto oscuro suave para contraste */
 
   h2 {
-    margin: 1.5rem 0;
-    color: #D5006D; /* Rosa oscuro para consistencia */
+    margin: 1.2rem 0;
+    color: #8E3B6D; /* Tono rosa oscuro */
+    font-size: 1rem;
   }
 `;
 
@@ -67,34 +69,35 @@ const ProductCard = styled(motion.div)`
   padding: 1rem;
   margin: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-
+  transition: transform 0.3s, box-shadow 0.3s;
+  
   &:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
   }
 `;
 
 const ProductImage = styled.img`
   width: 100%;
-  max-width: 200px;
+  max-width: 250px; /* Tamaño aumentado */
 
   @media (max-width: 768px) {
-    max-width: 150px;
+    max-width: 400px;
   }
 `;
 
 const ProductDescription = styled.p`
-  color: #5C5C5C;
+  color: #606060;
 `;
 
 const PriceTag = styled.p`
-  color: #1E90FF;
+  color: #D47294;
   font-weight: bold;
 `;
 
 const Home = () => {
   const products = [
-    { id: 6, name: 'GENTLE BLACK DEEP CLEANSING OIL', image: img6, description: 'Aceite limpiador profundo', price: '€12.49' },
+    { id: 6, name: 'Gentle Black Deep Cleasing Oil', image: img6, description: 'Aceite limpiador profundo', price: '€12.49' },
     { id: 7, name: 'Fundamental Nourishing Eye Butter', image: newProduct1, description: 'Mantequilla nutritiva para ojos', price: '€14.99' },
     { id: 8, name: 'Gentle Black Deep Cleansing Oil', image: newProduct2, description: 'Aceite de limpieza profunda', price: '€18.99' },
   ];
