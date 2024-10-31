@@ -10,8 +10,6 @@ import cleansingOil from '/src/assets/8809115025258_2.jpg';
 import unscentedToner from '/src/assets/8809572890901_2.jpg';
 import EyeAwakening from '/src/assets/Funamental eye awakening gel.jpg';
 import Juiced from '/src/assets/Freshly Juiced vitamin e.jpg';
-import newProduct1 from '/src/assets/14.jpg';
-import newProduct2 from '/src/assets/18.jpg';
 
 const ProductsContainer = styled.div`
   padding: 2rem;
@@ -93,49 +91,37 @@ const products = [
     name: 'RICH MOIST SOOTHING TENCEL SHEET MASK',
     price: '€3.99',
     image: richMoistSheetMask,
-    description: 'Mascarilla de tejido con ceramidas para hidratación y revitalización. Suave y calmante, ideal para todo tipo de piel. Contenido: 25 ml.'
-  },
-  {
-    name: 'FRESHLY JUICED VITAMIN E MASK',
-    price: '€30.99',
-    image: vitaminEMask,
-    description: 'Crema antiedad con vitamina E y niacinamida, combate arrugas y unifica el tono de la piel. Uso nocturno para todos los tipos de piel. Contenido: 90 ml.'
+    description: 'Sumérgete en un baño de suavidad y revitalización. Nuestra mascarilla de tejido, enriquecida con ceramidas, te transportará a un oasis de hidratación. Sentirás cómo tu piel se transforma, recuperando su luminosidad natural.\n\nContenido/Formato: 25 ml.\nTipo de piel: Todo tipo de piel.\nPaso de la rutina: 5. Mascarilla\nApto para embarazadas / Natural / Vegano\nIngredientes Clave: Aloe Barbadensis Leaf Juice, Panthenol, Ceramides.'
   },
   {
     name: 'RICH MOIST SOOTHING SERUM',
     price: '€23.99',
     image: richMoistSerum,
-    description: 'Sérum de hidratación profunda con ácido hialurónico para una piel suave y flexible. Ideal para todo tipo de piel. Contenido: 80 ml.'
+    description: 'Hidratación profunda y equilibrio perfecto. Este sérum, tu aliado para una piel saludable, penetra en las capas más profundas de tu piel, proporcionando una hidratación duradera.\n\nContenido/Formato: 80 ml.\nTipo de piel: Todo tipo de piel.\nPaso de la rutina: 7. Sérum\nApto para embarazadas / Natural / Vegano\nIngredientes Clave: Lipidure, Sodium Hyaluronate.'
+  },
+  {
+    name: 'FUNDAMENTAL NOURISHING EYE BUTTER',
+    price: '€26.99',
+    image: nourishingEyeButter,
+    description: 'Despierta tu mirada con un toque de juventud. Nuestro contorno de ojos, con su textura cremosa y rica en antioxidantes, nutre profundamente la piel apagada.\n\nContenido/Formato: 20 g.\nTipo de piel: Todo tipo de piel; ideal para piel seca y madura.\nPaso de la rutina: 8. Contorno de ojos\nApto para embarazadas / Natural / Vegano\nIngredientes Clave: Sunflower Seed Oil, Quad-peptides.'
+  },
+  {
+    name: 'FRESHLY JUICED VITAMIN E MASK',
+    price: '€30.99',
+    image: vitaminEMask,
+    description: 'El secreto para una piel joven y luminosa. Nuestra crema, con su fórmula antiedad, combate los signos del envejecimiento y unifica el tono de la piel.\n\nContenido/Formato: 90 ml.\nTipo de piel: Todo tipo de piel.\nPaso de la rutina: 10. Mascarillas de noche\nNatural / Vegano\nIngredientes Clave: Vitamin E, Niacinamide, Adenosine.'
   },
   {
     name: 'GENTLE BLACK DEEP CLEANSING OIL',
     price: '€24.99',
     image: cleansingOil,
-    description: 'Aceite limpiador con sésamo y grosella negra, limpia profundamente sin resecar. Ideal para todo tipo de piel.'
+    description: 'Descubre la limpieza más suave y eficaz. Nuestro aceite limpiador, enriquecido con una mezcla de aceites naturales, elimina a fondo el maquillaje y las impurezas sin resecar tu piel.\n\nContenido/Formato: 150 ml.\nTipo de piel: Todo tipo de piel.\nPaso de la rutina: 1. Desmaquillante\nApto para embarazadas / Best Seller / Natural / Vegano\nIngredientes Clave: Black Bean Oil, Black Sesame Oil, Black Currant Seed Oil.'
   },
   {
-    name: 'Fundamental Eye Awakening Gel',
+    name: 'FUNDAMENTAL EYE AWAKENING GEL',
     price: '€26.99',
     image: EyeAwakening,
-    description: 'Gel para ojos con cafeína y extracto de frijol rojo, reduce ojeras y bolsas. Contenido: 35 ml.'
-  },
-  {
-    name: 'Fundamental Nourishing Eye Butter',
-    price: '€26.99',
-    image: nourishingEyeButter,
-    description: 'Crema de ojos con aceite de girasol y tetrapéptidos, nutre y revitaliza la piel del contorno. Ideal para piel seca y madura.'
-  },
-  {
-    name: 'SUPPLE PREPARATION UNSCENTED TONER',
-    price: '€11.99',
-    image: unscentedToner,
-    description: 'Tónico sin fragancia que hidrata y equilibra el pH de la piel. Ideal para piel sensible. Contenido: 180 ml.'
-  },
-  {
-    name: 'FRESHLY JUICED VITAMIN C DROP',
-    price: '€23.99',
-    image: Juiced,
-    description: 'Sérum con vitamina C para iluminar y mejorar la textura de la piel, reduciendo manchas.'
+    description: 'Despierta tu mirada con una explosión de frescura. Nuestro contorno de ojos en gel, con su fórmula ligera y refrescante, revitaliza instantáneamente la piel del contorno ocular.\n\nContenido/Formato: 35 ml.\nTipo de piel: Todo tipo de piel; ideal para pieles grasas.\nPaso de la rutina: 8. Contorno de ojos\nApto para embarazadas / Natural / Vegano\nIngredientes Clave: Caffeine, Red Bean Extract.'
   },
 ];
 
