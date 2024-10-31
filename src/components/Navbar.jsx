@@ -25,17 +25,32 @@ const NavbarContainer = styled.nav`
   }
 
   .nav-links {
-    display: none;
+    display: flex;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    a {
+      color: #C71585; /* Darker shade of pink for contrast */
+      text-decoration: none;
+      font-weight: bold; /* Make text bold */
+      transition: color 0.3s ease; /* Smooth transition for hover effect */
+
+      &:hover {
+        color: #D5006D; /* Change color on hover */
+      }
+    }
   }
 
   .hamburger {
     font-size: 2rem;
     cursor: pointer;
-    display: none;
+    display: block;
 
-    @media (max-width: 768px) {
-      display: block;
-      position: relative;
+    @media (min-width: 769px) {
+      display: none;
     }
   }
 `;
@@ -54,11 +69,17 @@ const MotionMenu = styled(motion.div)`
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 
   a {
-    color: #D5006D;
+    color: #C71585; /* Darker shade of pink for contrast */
     text-decoration: none;
     margin: 1rem 0;
     text-align: center;
     font-size: 1.2rem;
+    font-weight: bold; /* Make text bold */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+
+    &:hover {
+      color: #D5006D; /* Change color on hover */
+    }
   }
 
   .menu-close {
@@ -90,6 +111,12 @@ const Navbar = () => {
         <Link to="/">
           <img src={logo} alt="Logo" />
         </Link>
+      </div>
+
+      <div className="nav-links">
+        <Link to="/products">Productos</Link>
+        <Link to="/about">Sobre Nosotros</Link>
+        <Link to="/contact">Contacto</Link>
       </div>
 
       {isOpen && (

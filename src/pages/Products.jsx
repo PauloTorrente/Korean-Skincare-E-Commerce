@@ -2,34 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-// Import images
 import richMoistSheetMask from '/src/assets/Richmoissoothing(bolsitafrente).jpg';
 import richMoistSerum from '/src/assets/Serum(fueradecaja).jpg';
 import nourishingEyeButter from '/src/assets/8809572890581_1.jpg';
 import vitaminEMask from '/src/assets/freshlyjuicedemask(fueradecaja).jpg';
-import freePouch from '/src/assets/Logo.png';
 import cleansingOil from '/src/assets/8809115025258_2.jpg';
 import unscentedToner from '/src/assets/8809572890901_2.jpg';
-import Eyeawaeking from '/src/assets/Funamental eye awakening gel.jpg';
-import Watergel from '/src/assets/Funamental eye awakening gel.jpg';
+import EyeAwakening from '/src/assets/Funamental eye awakening gel.jpg';
+import Juiced from '/src/assets/Freshly Juiced vitamin e.jpg';
 import newProduct1 from '/src/assets/14.jpg';
 import newProduct2 from '/src/assets/18.jpg';
 
-// Styled components
 const ProductsContainer = styled.div`
   padding: 2rem;
-  background-color: #F2F2F2; /* Fondo claro para el contenedor principal */
+  background-color: #F2F2F2;
 
   h1 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-align: center;
-    color: #010326; 
+    color: #010326;
+    font-weight: bold;
   }
 
   .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
     margin-top: 2rem;
   }
 
@@ -53,23 +51,24 @@ const ProductsContainer = styled.div`
     object-fit: cover;
     margin-bottom: 1rem;
     border-radius: 8px;
-    border: 2px solid #94E9F2; /* Borde azul claro alrededor de las imágenes */
+    border: 2px solid #94E9F2;
   }
 
   .product-card h2 {
     font-size: 1.2rem;
-    color: #010326; /* Color oscuro para los títulos de los productos */
+    color: #010326;
   }
 
   .product-card p {
-    font-size: 1rem;
-    color: #666; /* Gris suave para el texto de referencia */
+    font-size: 0.95rem;
+    color: #333;
+    margin-top: 0.5rem;
   }
 
   .product-card span {
     display: block;
     font-size: 1.1rem;
-    color: #94E9F2; /* Azul claro para el precio */
+    color: #94E9F2;
     margin-top: 0.5rem;
     font-weight: bold;
   }
@@ -84,70 +83,62 @@ const ProductsContainer = styled.div`
     }
 
     .product-card p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
   }
 `;
 
-// Datos de productos
 const products = [
   {
     name: 'RICH MOIST SOOTHING TENCEL SHEET MASK',
-    reference: 'KLIRMA',
-    price: '€1.99',
+    price: '€3.99',
     image: richMoistSheetMask,
-  },
-  {
-    name: 'RICH MOIST SOOTHING TENCEL SHEET MASK',
-    reference: 'KLIRMA',
-    price: '€12.99',
-    image: Eyeawaeking,
-  },
-  {
-    name: 'Fundamental Eye Awakening Gel',
-    reference: 'KLIVMA',
-    price: '€12.49',
-    image: Eyeawaeking
-  },
-  {
-    name: 'RICH MOIST SOOTHING SERUM',
-    reference: 'KLRISE',
-    price: '€11.99',
-    image: richMoistSerum,
+    description: 'Mascarilla de tejido con ceramidas para hidratación y revitalización. Suave y calmante, ideal para todo tipo de piel. Contenido: 25 ml.'
   },
   {
     name: 'FRESHLY JUICED VITAMIN E MASK',
-    reference: 'KLIVMA',
-    price: '€15.49',
+    price: '€30.99',
     image: vitaminEMask,
+    description: 'Crema antiedad con vitamina E y niacinamida, combate arrugas y unifica el tono de la piel. Uso nocturno para todos los tipos de piel. Contenido: 90 ml.'
+  },
+  {
+    name: 'RICH MOIST SOOTHING SERUM',
+    price: '€23.99',
+    image: richMoistSerum,
+    description: 'Sérum de hidratación profunda con ácido hialurónico para una piel suave y flexible. Ideal para todo tipo de piel. Contenido: 80 ml.'
   },
   {
     name: 'GENTLE BLACK DEEP CLEANSING OIL',
-    reference: 'KLGE01',
-    price: '€12.49',
+    price: '€24.99',
     image: cleansingOil,
+    description: 'Aceite limpiador con sésamo y grosella negra, limpia profundamente sin resecar. Ideal para todo tipo de piel.'
   },
   {
-    name: 'SUPPLE PREPARATION UNSCENTED TONER',
-    reference: 'KLUNTO',
-    price: '€11.99',
-    image: unscentedToner,
+    name: 'Fundamental Eye Awakening Gel',
+    price: '€26.99',
+    image: EyeAwakening,
+    description: 'Gel para ojos con cafeína y extracto de frijol rojo, reduce ojeras y bolsas. Contenido: 35 ml.'
   },
   {
     name: 'Fundamental Nourishing Eye Butter',
-    reference: 'NEWPROD1',
-    price: '€14.99',
-    image: newProduct1,
+    price: '€26.99',
+    image: nourishingEyeButter,
+    description: 'Crema de ojos con aceite de girasol y tetrapéptidos, nutre y revitaliza la piel del contorno. Ideal para piel seca y madura.'
   },
   {
-    name: 'Gentle Black Deep Cleansing Oil',
-    reference: 'NEWPROD2',
-    price: '€18.99',
-    image: newProduct2,
+    name: 'SUPPLE PREPARATION UNSCENTED TONER',
+    price: '€11.99',
+    image: unscentedToner,
+    description: 'Tónico sin fragancia que hidrata y equilibra el pH de la piel. Ideal para piel sensible. Contenido: 180 ml.'
+  },
+  {
+    name: 'FRESHLY JUICED VITAMIN C DROP',
+    price: '€23.99',
+    image: Juiced,
+    description: 'Sérum con vitamina C para iluminar y mejorar la textura de la piel, reduciendo manchas.'
   },
 ];
 
-// Products page
 const Products = () => {
   return (
     <ProductsContainer>
@@ -157,13 +148,13 @@ const Products = () => {
           <motion.div
             className="product-card"
             key={index}
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.5, delay: index * 0.1 }} 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <img src={product.image} alt={product.name} />
             <h2>{product.name}</h2>
-            <p>Referencia: {product.reference}</p>
+            <p>{product.description}</p>
             <span>{product.price}</span>
           </motion.div>
         ))}
