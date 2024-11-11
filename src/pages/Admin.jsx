@@ -1,4 +1,3 @@
-// src/pages/Admin.jsx
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  // Importing useNavigate for routing
 

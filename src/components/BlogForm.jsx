@@ -1,4 +1,3 @@
-// src/components/BlogForm.jsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -70,12 +69,33 @@ const SubmitButton = styled.button`
   }
 `;
 
+const LoadingSpinner = styled.div`
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #8c6c83; /* Darker color */
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: #ff4d4d;
+  margin-top: 12px;
+  font-size: 0.9rem;
+`;
+
 const BlogForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
@@ -96,8 +116,15 @@ const BlogForm = () => {
     formData.append('content', content);
     if (image) formData.append('image', image);
 
+    setIsLoading(true);
+
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        setErrorMessage('Please log in to create a blog post.');
+        return;
+      }
+
       const response = await fetch('https://korean-skincare-blog-backend.onrender.com/api/blog', {
         method: 'POST',
         headers: {
@@ -106,11 +133,17 @@ const BlogForm = () => {
         body: formData,
       });
 
-      if (!response.ok) throw new Error('Failed to create post');
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Failed to create post');
+        return;
+      }
 
       navigate('/admin');
     } catch (error) {
       setErrorMessage('An error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -132,8 +165,10 @@ const BlogForm = () => {
           />
           <Input type="file" accept="image/*" onChange={handleImageChange} />
           {imagePreview && <ImagePreview src={imagePreview} alt="Selected Image Preview" />}
-          <SubmitButton type="submit">Post Blog</SubmitButton>
-          {errorMessage && <div>{errorMessage}</div>}
+          <SubmitButton type="submit">
+            {isLoading ? <LoadingSpinner /> : 'Post Blog'}
+          </SubmitButton>
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </form>
       </FormWrapper>
     </BlogFormContainer>

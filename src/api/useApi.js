@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useUserContext } from '../components/UserContext'; // Importing user context
+import { useUserContext } from '../components/UserContext'; 
 
-// Custom hook for handling general API calls and login
 const useApi = (url, method = 'GET', body = null) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useUserContext(); // Accessing the login function from user context
+  const { user, login } = useUserContext();
 
-  // Function to handle user login
   const loginUser = async (username, password) => {
     setIsLoading(true);
     try {
-      console.log('Sending login request with username:', username);
       const response = await fetch('https://korean-skincare-blog-backend.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
@@ -24,40 +21,29 @@ const useApi = (url, method = 'GET', body = null) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Login error:', errorData);
         setError(errorData.message || 'Invalid credentials');
         setIsLoading(false);
         return null;
       }
 
       const data = await response.json();
-      console.log('Login successful, received data:', data);
-
-      // Check if `data.user` exists before accessing its properties
-      const user = data.user || {};
-      localStorage.setItem('token', data.token);
-      console.log('Token stored in localStorage:', localStorage.getItem('token'));
-
-      // Calling the login function from context to store user data
       login({
         token: data.token,
         refreshToken: data.refreshToken,
-        role: user.role || null,
-        userId: user.id || null,
+        role: data.user?.role || null,
+        userId: data.user?.id || null,
       });
 
       setData(data);
       setIsLoading(false);
       return data;
     } catch (err) {
-      console.error('Error during login:', err);
       setError('Error during login');
       setIsLoading(false);
       return null;
     }
   };
 
-  // General API call logic (for fetching data)
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -66,6 +52,7 @@ const useApi = (url, method = 'GET', body = null) => {
           method,
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`,
           },
           body: body ? JSON.stringify(body) : null,
         });
@@ -80,9 +67,9 @@ const useApi = (url, method = 'GET', body = null) => {
     };
 
     if (url) fetchData();
-  }, [url, method, body]);
+  }, [url, method, body, user.token]);
 
-  return { data, error, isLoading, loginUser }; // Return both general API data and loginUser function
+  return { data, error, isLoading, loginUser };
 };
 
 export default useApi;
