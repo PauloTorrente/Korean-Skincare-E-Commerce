@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/Logo.png';
 import { FaBars } from 'react-icons/fa';
@@ -97,13 +97,19 @@ const MotionMenu = styled(motion.div)`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const navigate = useNavigate();
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const token = localStorage.getItem('token');
-  console.log("Token from localStorage:", token);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear token
+    navigate('/'); // Navigate to home or login
+    window.location.reload(); // Refresh page to update state
+  };
 
   return (
     <NavbarContainer>
@@ -120,7 +126,18 @@ const Navbar = () => {
         {token ? (
           <>
             <Link to="/admin">Admin</Link>
-            <Link to="/logout">Logout</Link>
+            <button
+              onClick={handleLogout}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#C71585',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+              }}
+            >
+              Logout
+            </button>
           </>
         ) : (
           <Link to="/login">Login</Link>
@@ -138,6 +155,30 @@ const Navbar = () => {
           exit={{ x: '-100%' }}
         >
           <div className="menu-close" onClick={toggleMenu}>✕</div>
+          {token ? (
+            <>
+              <Link to="/admin" onClick={toggleMenu}>Admin</Link>
+              <button
+                onClick={() => {
+                  toggleMenu();
+                  handleLogout();
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#C71585',
+                  textAlign: 'left',
+                  fontWeight: 'bold',
+                  marginTop: '1rem',
+                  cursor: 'pointer',
+                }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" onClick={toggleMenu}>Login</Link>
+          )}
           <Link to="/products" onClick={toggleMenu}>Productos</Link>
           <Link to="/about" onClick={toggleMenu}>Sobre Nosotros</Link>
           <Link to="/contact" onClick={toggleMenu}>Contacto</Link>
