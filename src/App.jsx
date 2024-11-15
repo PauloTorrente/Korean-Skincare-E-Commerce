@@ -10,8 +10,8 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import BlogForm from './components/BlogForm';
-import BlogList from './pages/BlogList';
-import ProductUpload from './components/ProductUpload'; // New import
+import BlogList from './pages/BlogList'; // path fixed
+import ProductUpload from './components/ProductUpload'; 
 import { UserProvider } from './components/UserContext';
 
 const checkAuth = () => {
