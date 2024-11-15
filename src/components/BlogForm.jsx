@@ -133,11 +133,7 @@ const BlogForm = () => {
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Failed to create post');
-        return;
-      }
+      if (!response.ok) throw new Error('Failed to create post');
 
       navigate('/admin');
     } catch (error) {

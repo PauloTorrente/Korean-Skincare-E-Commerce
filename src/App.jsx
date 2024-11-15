@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import Login from './pages/Login';
 import BlogForm from './components/BlogForm';
 import BlogList from './pages/BlogList';
+import ProductUpload from './components/ProductUpload'; // New import
 import { UserProvider } from './components/UserContext';
 
 const checkAuth = () => {
@@ -52,8 +53,7 @@ function App() {
             <Route path="/login" element={<Login setIsAuthenticated={handleLogin} />} />
             <Route path="/admin" element={isAuthenticated ? <Admin handleLogout={handleLogout} /> : <Navigate to="/login" replace />} />
             <Route path="/admin/blogs" element={isAuthenticated ? <BlogForm /> : <Navigate to="/login" replace />} />
-            
-            {/* New Blogs Route */}
+            <Route path="/admin/upload-product" element={isAuthenticated ? <ProductUpload /> : <Navigate to="/login" replace />} /> {/* New Product Upload Route */}
             <Route path="/blogs" element={<BlogList />} />
           </Routes>
         </AnimatePresence>

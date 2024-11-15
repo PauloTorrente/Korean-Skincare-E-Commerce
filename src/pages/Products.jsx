@@ -1,16 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-
-// Imágenes
-import richMoistSheetMask from '/src/assets/Richmoissoothing(bolsitafrente).jpg';
-import richMoistSerum from '/src/assets/Serum(fueradecaja).jpg';
-import nourishingEyeButter from '/src/assets/8809572890581_1.jpg';
-import vitaminEMask from '/src/assets/freshlyjuicedemask(fueradecaja).jpg';
-import cleansingOil from '/src/assets/8809115025258_2.jpg';
-import unscentedToner from '/src/assets/8809572890901_2.jpg';
-import EyeAwakening from '/src/assets/Funamental eye awakening gel.jpg';
-import Juiced from '/src/assets/Freshly Juiced vitamin e.jpg';
+import axios from 'axios';
 
 const ProductsContainer = styled.div`
   padding: 2rem;
@@ -42,15 +33,6 @@ const ProductsContainer = styled.div`
     &:hover {
       transform: translateY(-10px);
     }
-  }
-
-  .product-card img {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    border: 2px solid #94E9F2;
   }
 
   .product-card h2 {
@@ -90,76 +72,41 @@ const ProductsContainer = styled.div`
 const animationSettings = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
+  transition: { duration: 0.5 },
 };
 
-const products = [
-  {
-    name: 'RICH MOIST SOOTHING TENCEL SHEET MASK',
-    price: '€3.99',
-    image: richMoistSheetMask,
-    description: 'Mascarilla de tejido con ceramidas para hidratación y revitalización. Suave y calmante, ideal para todo tipo de piel. Contenido: 25 ml.'
-  },
-  {
-    name: 'FRESHLY JUICED VITAMIN E MASK',
-    price: '€30.99',
-    image: vitaminEMask,
-    description: 'Crema antiedad con vitamina E y niacinamida, combate arrugas y unifica el tono de la piel. Uso nocturno para todos los tipos de piel. Contenido: 90 ml.'
-  },
-  {
-    name: 'RICH MOIST SOOTHING SERUM',
-    price: '€23.99',
-    image: richMoistSerum,
-    description: 'Sérum de hidratación profunda con ácido hialurónico para una piel suave y flexible. Ideal para todo tipo de piel. Contenido: 80 ml.'
-  },
-  {
-    name: 'GENTLE BLACK DEEP CLEANSING OIL',
-    price: '€24.99',
-    image: cleansingOil,
-    description: 'Aceite limpiador con sésamo y grosella negra, limpia profundamente sin resecar. Ideal para todo tipo de piel.'
-  },
-  {
-    name: 'Fundamental Eye Awakening Gel',
-    price: '€26.99',
-    image: EyeAwakening,
-    description: 'Gel para ojos con cafeína y extracto de frijol rojo, reduce ojeras y bolsas. Contenido: 35 ml.'
-  },
-  {
-    name: 'Fundamental Nourishing Eye Butter',
-    price: '€26.99',
-    image: nourishingEyeButter,
-    description: 'Crema de ojos con aceite de girasol y tetrapéptidos, nutre y revitaliza la piel del contorno. Ideal para piel seca y madura.'
-  },
-  {
-    name: 'SUPPLE PREPARATION UNSCENTED TONER',
-    price: '€11.99',
-    image: unscentedToner,
-    description: 'Tónico sin fragancia que hidrata y equilibra el pH de la piel. Ideal para piel sensible. Contenido: 180 ml.'
-  },
-  {
-    name: 'FRESHLY JUICED VITAMIN C DROP',
-    price: '€23.99',
-    image: Juiced,
-    description: 'Sérum con vitamina C para iluminar y mejorar la textura de la piel, reduciendo manchas.'
-  }
-];
-
 const Products = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          'https://korean-skincare-blog-backend.onrender.com/api/products'
+        );
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <ProductsContainer>
-      <h1>Productos Destacados</h1>
+      <h1>Available Products</h1>
       <div className="products-grid">
         {products.map((product, index) => (
-          <motion.div 
+          <motion.div
             className="product-card"
-            key={index}
+            key={product.id}
             {...animationSettings}
             transition={{ ...animationSettings.transition, delay: index * 0.1 }}
           >
-            <img src={product.image} alt={product.name} />
             <h2>{product.name}</h2>
             <p>{product.description}</p>
-            <span>{product.price}</span>
+            <span>€{product.price}</span>
           </motion.div>
         ))}
       </div>

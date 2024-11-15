@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useUserContext } from '../components/UserContext'; 
+import { useUserContext } from '../components/UserContext';
 
 const useApi = (url, method = 'GET', body = null) => {
   const [data, setData] = useState(null);
@@ -27,6 +27,9 @@ const useApi = (url, method = 'GET', body = null) => {
       }
 
       const data = await response.json();
+      // Store the token in localStorage
+      localStorage.setItem('token', data.token);
+
       login({
         token: data.token,
         refreshToken: data.refreshToken,

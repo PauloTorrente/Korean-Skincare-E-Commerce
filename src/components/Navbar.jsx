@@ -33,13 +33,13 @@ const NavbarContainer = styled.nav`
     }
 
     a {
-      color: #C71585; /* Darker shade of pink for contrast */
+      color: #C71585;
       text-decoration: none;
-      font-weight: bold; /* Make text bold */
-      transition: color 0.3s ease; /* Smooth transition for hover effect */
+      font-weight: bold;
+      transition: color 0.3s ease;
 
       &:hover {
-        color: #D5006D; /* Change color on hover */
+        color: #D5006D;
       }
     }
   }
@@ -69,16 +69,16 @@ const MotionMenu = styled(motion.div)`
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 
   a {
-    color: #C71585; /* Darker shade of pink for contrast */
+    color: #C71585;
     text-decoration: none;
     margin: 1rem 0;
     text-align: center;
     font-size: 1.2rem;
-    font-weight: bold; /* Make text bold */
-    transition: color 0.3s ease; /* Smooth transition for hover effect */
+    font-weight: bold;
+    transition: color 0.3s ease;
 
     &:hover {
-      color: #D5006D; /* Change color on hover */
+      color: #D5006D;
     }
   }
 
@@ -97,10 +97,13 @@ const MotionMenu = styled(motion.div)`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const token = localStorage.getItem('token');
+  console.log("Token from localStorage:", token);
 
   return (
     <NavbarContainer>
@@ -114,6 +117,14 @@ const Navbar = () => {
       </div>
 
       <div className="nav-links">
+        {token ? (
+          <>
+            <Link to="/admin">Admin</Link>
+            <Link to="/logout">Logout</Link>
+          </>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
         <Link to="/products">Productos</Link>
         <Link to="/about">Sobre Nosotros</Link>
         <Link to="/contact">Contacto</Link>
