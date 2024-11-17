@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -49,12 +49,14 @@ const Button = styled.button`
 
 const AdminPage = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     if (!token) {
       navigate('/login');
+    } else {
+      setIsLoading(false); 
     }
   }, [navigate]);
 
@@ -65,6 +67,8 @@ const AdminPage = () => {
   const handleUploadProductClick = () => {
     navigate('/admin/upload-product');
   };
+
+  if (isLoading) return <p>Loading...</p>; 
 
   return (
     <Container>

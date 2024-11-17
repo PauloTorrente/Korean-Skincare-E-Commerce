@@ -8,6 +8,35 @@ const useApi = (url, method = 'GET', body = null) => {
 
   const { user, login } = useUserContext();
 
+  // Helper function for API calls
+  const fetchData = async (url, method, body, token) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: body ? JSON.stringify(body) : null,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch');
+      }
+      
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      setError(err.message);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Login functionality
   const loginUser = async (username, password) => {
     setIsLoading(true);
     try {
@@ -27,7 +56,7 @@ const useApi = (url, method = 'GET', body = null) => {
       }
 
       const data = await response.json();
-      // Store the token in localStorage
+      // Store token and user data in localStorage and context
       localStorage.setItem('token', data.token);
 
       login({
@@ -48,29 +77,19 @@ const useApi = (url, method = 'GET', body = null) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`,
-          },
-          body: body ? JSON.stringify(body) : null,
-        });
-        if (!response.ok) throw new Error('Failed to fetch');
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err.message);
-      } finally {
+    if (url) {
+      const token = user?.token;
+      if (!token) {
+        setError('No token available');
         setIsLoading(false);
+        return;
       }
-    };
 
-    if (url) fetchData();
-  }, [url, method, body, user.token]);
+      fetchData(url, method, body, token).then((result) => {
+        if (result) setData(result);
+      });
+    }
+  }, [url, method, body, user?.token]);
 
   return { data, error, isLoading, loginUser };
 };

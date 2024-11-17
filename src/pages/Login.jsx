@@ -77,24 +77,23 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const { loginUser } = useApi();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await loginUser(username, password);
-    if (response && response.token) {
-      localStorage.setItem('token', response.token);
-      setIsLoggedIn(true); // Establecer estado de login exitoso
-    } else {
-      setErrorMessage('Invalid credentials');
+    setErrorMessage(''); // Reset error message before making the request
+    try {
+      const response = await loginUser(username, password);
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+        navigate('/admin'); // Redirect to admin page on success
+      } else {
+        setErrorMessage('Invalid credentials');
+      }
+    } catch (error) {
+      setErrorMessage('An error occurred. Please try again later.');
     }
-  };
-
-  const handleGoToAdmin = () => {
-    navigate('/admin'); // Redirigir al admin cuando se haga clic en el botón
   };
 
   return (
@@ -118,10 +117,6 @@ const LoginPage = () => {
         </Button>
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Form>
-
-      {isLoggedIn && (
-        <Button onClick={handleGoToAdmin}>Go to Admin</Button> // Mostrar el botón de redirección
-      )}
     </Container>
   );
 };
