@@ -29,14 +29,13 @@ const useApi = (url, method = 'GET', body = null) => {
       const result = await response.json();
       return result;
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'An unexpected error occurred');
       return null;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Login functionality
   const loginUser = async (username, password) => {
     setIsLoading(true);
     try {
@@ -45,49 +44,44 @@ const useApi = (url, method = 'GET', body = null) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password }),  // Use username, not email
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         setError(errorData.message || 'Invalid credentials');
         setIsLoading(false);
         return null;
       }
-
+  
       const data = await response.json();
       // Store token and user data in localStorage and context
       localStorage.setItem('token', data.token);
-
+  
       login({
         token: data.token,
         refreshToken: data.refreshToken,
         role: data.user?.role || null,
         userId: data.user?.id || null,
       });
-
+  
       setData(data);
       setIsLoading(false);
       return data;
     } catch (err) {
-      setError('Error during login');
+      setError(err.message || 'Error during login');
       setIsLoading(false);
       return null;
     }
   };
 
   useEffect(() => {
-    if (url) {
-      const token = user?.token;
-      if (!token) {
-        setError('No token available');
-        setIsLoading(false);
-        return;
-      }
-
-      fetchData(url, method, body, token).then((result) => {
+    if (url && user?.token) {
+      fetchData(url, method, body, user.token).then((result) => {
         if (result) setData(result);
       });
+    } else {
+      setError('No valid token available');
     }
   }, [url, method, body, user?.token]);
 

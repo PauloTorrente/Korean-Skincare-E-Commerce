@@ -82,17 +82,25 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(''); // Reset error message before making the request
+    setErrorMessage('');
     try {
-      const response = await loginUser(username, password);
-      if (response && response.token) {
+      const response = await loginUser(username, password);  // Updated for username
+      if (response?.token) {
         localStorage.setItem('token', response.token);
-        navigate('/admin'); // Redirect to admin page on success
+        localStorage.setItem('refresh_token', response.refreshToken);
+        navigate('/admin');
       } else {
         setErrorMessage('Invalid credentials');
       }
     } catch (error) {
-      setErrorMessage('An error occurred. Please try again later.');
+      console.error('Login error:', error);
+      if (error?.response?.status === 401) {
+        setErrorMessage('Invalid credentials');
+      } else if (error?.response?.status === 500) {
+        setErrorMessage('Server error, please try again later');
+      } else {
+        setErrorMessage('An unknown error occurred');
+      }
     }
   };
 

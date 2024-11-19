@@ -5,11 +5,17 @@ function usePostApi() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function postData({ route, payload, method = 'POST' }) {
+  // Helper function for making the fetch request
+  const postData = async ({ route, payload, method = 'POST' }) => {
     setIsLoading(true);
 
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No token found');
+        return;
+      }
+
       const response = await fetch(`https://korean-skincare-blog-backend.onrender.com/${route}`, {
         method,
         headers: {
@@ -21,18 +27,18 @@ function usePostApi() {
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        setError(errorResponse.message || 'Error sending data');
+        setError(errorResponse.message || `Error sending data: ${response.status}`);
         return;
       }
 
       const responseAsJson = await response.json();
       setData(responseAsJson);
     } catch (err) {
-      setError('Error sending data');
+      setError(`Error sending data: ${err.message}`);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return { data, postData, error, isLoading };
 }

@@ -51,13 +51,17 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const checkAuth = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/login');
     } else {
       setIsLoading(false); 
     }
+  };
+
+  useEffect(() => {
+    checkAuth(); 
   }, [navigate]);
 
   const handleCreateBlogClick = () => {
@@ -69,7 +73,6 @@ const AdminPage = () => {
   };
 
   if (isLoading) return <p>Loading...</p>; 
-
   return (
     <Container>
       <h1>Admin Dashboard</h1>

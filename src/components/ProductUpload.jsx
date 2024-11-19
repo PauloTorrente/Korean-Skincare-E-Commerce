@@ -1,217 +1,143 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import usePostApi from '../api/usePostApi';
+import { motion } from 'framer-motion';
+import axios from 'axios';
 
-const Container = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f7f7;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  color: #333;
-`;
+const ProductsContainer = styled.div`
+  padding: 2rem;
+  background-color: #F2F2F2;
 
-const Title = styled.h2`
-  text-align: center;
-  font-size: 24px;
-  color: #5e5c5c;
-`;
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #010326;
+    font-weight: bold;
+  }
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
 
-const Label = styled.label`
-  font-size: 16px;
-  color: #4d4d4d;
-`;
+  .product-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 1rem;
+    transition: transform 0.3s ease;
 
-const Input = styled.input`
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  &:focus {
-    border-color: #b5a5a5;
+    &:hover {
+      transform: translateY(-10px);
+    }
+  }
+
+  .product-card h2 {
+    font-size: 1.2rem;
+    color: #010326;
+  }
+
+  .product-card p {
+    font-size: 0.95rem;
+    color: #333;
+    margin-top: 0.5rem;
+  }
+
+  .product-card span {
+    display: block;
+    font-size: 1.1rem;
+    color: #94E9F2;
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+
+  .loading {
+    text-align: center;
+    color: #010326;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .error-message {
+    color: #d9534f;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .products-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .product-card h2 {
+      font-size: 1rem;
+    }
+
+    .product-card p {
+      font-size: 0.85rem;
+    }
   }
 `;
 
-const Textarea = styled.textarea`
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  resize: vertical;
-  &:focus {
-    border-color: #b5a5a5;
-  }
-`;
+const animationSettings = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+};
 
-const Button = styled.button`
-  padding: 12px;
-  font-size: 18px;
-  background-color: #d1b5a5;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #b39485;
-  }
-`;
+const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const ErrorMessage = styled.p`
-  color: red;
-  font-size: 14px;
-`;
-
-const ProductUpload = () => {
-  const { postData, error, isLoading } = usePostApi();
-  const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    inStock: true,
-    category: '',
-    brand: '',
-    description: '',
-    image: null,
-  });
-  const [fileError, setFileError] = useState('');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      if (file.type !== 'image/webp') {
-        setFileError('Only .webp files are allowed.');
-        setFormData({ ...formData, image: null });
-      } else {
-        setFileError('');
-        setFormData({ ...formData, image: file });
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          'https://korean-skincare-blog-backend.onrender.com/api/products'
+        );
+        setProducts(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError('Failed to load products. Please try again later.');
+        setLoading(false);
       }
-    }
-  };
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    fetchProducts();
+  }, []);
 
-    if (!formData.image) {
-      alert('Please upload a valid .webp image.');
-      return;
-    }
+  if (loading) {
+    return <div className="loading">Loading products...</div>;
+  }
 
-    const productData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      productData.append(key, formData[key]);
-    });
-
-    await postData({
-      route: 'api/products',
-      payload: productData,
-      method: 'POST',
-    });
-
-    if (!error) {
-      alert('Product uploaded successfully!');
-      setFormData({
-        name: '',
-        price: '',
-        inStock: true,
-        category: '',
-        brand: '',
-        description: '',
-        image: null,
-      });
-    } else {
-      alert(`Failed to upload product: ${error}`);
-    }
-  };
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   return (
-    <Container>
-      <Title>Upload a New Product</Title>
-      <Form onSubmit={handleSubmit}>
-        <Label>Product Name</Label>
-        <Input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-
-        <Label>Price</Label>
-        <Input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
-
-        <Label>In Stock</Label>
-        <Input
-          type="checkbox"
-          name="inStock"
-          checked={formData.inStock}
-          onChange={() => setFormData({ ...formData, inStock: !formData.inStock })}
-        />
-
-        <Label>Category</Label>
-        <Input
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-        />
-
-        <Label>Brand</Label>
-        <Input
-          type="text"
-          name="brand"
-          value={formData.brand}
-          onChange={handleChange}
-          required
-        />
-
-        <Label>Description</Label>
-        <Textarea
-          name="description"
-          rows="4"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        />
-
-        <Label>Product Image</Label>
-        <Input
-          type="file"
-          name="image"
-          onChange={handleFileChange}
-          required
-        />
-        {fileError && <ErrorMessage>{fileError}</ErrorMessage>}
-
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Uploading...' : 'Upload Product'}
-        </Button>
-      </Form>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-    </Container>
+    <ProductsContainer>
+      <h1>Available Products</h1>
+      <div className="products-grid">
+        {products.map((product, index) => (
+          <motion.div
+            className="product-card"
+            key={product.id}
+            {...animationSettings}
+            transition={{ ...animationSettings.transition, delay: index * 0.1 }}
+          >
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <span>€{product.price}</span>
+          </motion.div>
+        ))}
+      </div>
+    </ProductsContainer>
   );
 };
 
-export default ProductUpload;
+export default Products;
