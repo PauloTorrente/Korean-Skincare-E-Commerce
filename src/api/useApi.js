@@ -8,10 +8,10 @@ const useApi = (url, method = 'GET', body = null) => {
 
   const { user, login } = useUserContext();
 
-  // Helper function for API calls
   const fetchData = async (url, method, body, token) => {
     setIsLoading(true);
     try {
+      console.log('Fetching data from:', url);  // Debug API call URL
       const response = await fetch(url, {
         method,
         headers: {
@@ -23,12 +23,15 @@ const useApi = (url, method = 'GET', body = null) => {
 
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('Error fetching data:', errorData);  // Debug error response
         throw new Error(errorData.message || 'Failed to fetch');
       }
       
       const result = await response.json();
+      console.log('API Response:', result);  // Debug API success response
       return result;
     } catch (err) {
+      console.error('Error during fetch:', err);
       setError(err.message || 'An unexpected error occurred');
       return null;
     } finally {
@@ -38,26 +41,27 @@ const useApi = (url, method = 'GET', body = null) => {
 
   const loginUser = async (username, password) => {
     setIsLoading(true);
+    console.log('Logging in with:', username, password);  // Debug login attempt
     try {
       const response = await fetch('https://korean-skincare-blog-backend.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),  // Use username, not email
+        body: JSON.stringify({ username, password }),  // Send username, not email
       });
   
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('Login failed:', errorData);  // Debug error response
         setError(errorData.message || 'Invalid credentials');
         setIsLoading(false);
         return null;
       }
   
       const data = await response.json();
-      // Store token and user data in localStorage and context
+      console.log('Login success, token:', data.token);  // Debug token received
       localStorage.setItem('token', data.token);
-  
       login({
         token: data.token,
         refreshToken: data.refreshToken,
@@ -69,6 +73,7 @@ const useApi = (url, method = 'GET', body = null) => {
       setIsLoading(false);
       return data;
     } catch (err) {
+      console.error('Error during login:', err);
       setError(err.message || 'Error during login');
       setIsLoading(false);
       return null;

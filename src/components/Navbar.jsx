@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/Logo.png';
@@ -97,13 +97,22 @@ const MotionMenu = styled(motion.div)`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const token = localStorage.getItem('token');
-  console.log("Token from localStorage:", token);
+  const handleLogout = () => {
+    console.log('Logging out...');
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    setToken(null); // Update the token state
+  };
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
 
   return (
     <NavbarContainer>
@@ -120,7 +129,7 @@ const Navbar = () => {
         {token ? (
           <>
             <Link to="/admin">Admin</Link>
-            <Link to="/logout">Logout</Link>
+            <Link to="/" onClick={handleLogout}>Logout</Link>
           </>
         ) : (
           <Link to="/login">Login</Link>

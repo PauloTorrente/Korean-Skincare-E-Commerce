@@ -83,24 +83,23 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
+
     try {
-      const response = await loginUser(username, password);  // Updated for username
+      const response = await loginUser(username, password);
       if (response?.token) {
+        const user = { username, role: response.role }; // You can adjust this based on your API response
+
+        localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', response.token);
         localStorage.setItem('refresh_token', response.refreshToken);
+
         navigate('/admin');
       } else {
         setErrorMessage('Invalid credentials');
       }
     } catch (error) {
       console.error('Login error:', error);
-      if (error?.response?.status === 401) {
-        setErrorMessage('Invalid credentials');
-      } else if (error?.response?.status === 500) {
-        setErrorMessage('Server error, please try again later');
-      } else {
-        setErrorMessage('An unknown error occurred');
-      }
+      setErrorMessage('An error occurred during login');
     }
   };
 

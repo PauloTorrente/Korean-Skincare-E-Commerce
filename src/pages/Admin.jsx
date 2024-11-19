@@ -52,16 +52,20 @@ const AdminPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const checkAuth = () => {
+    // Check if the token exists in localStorage
     const token = localStorage.getItem('token');
+    
     if (!token) {
+      // If no token, redirect to login page
       navigate('/login');
     } else {
-      setIsLoading(false); 
+      // If token exists, we are authenticated
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    checkAuth(); 
+    checkAuth(); // Run the auth check on component mount
   }, [navigate]);
 
   const handleCreateBlogClick = () => {
@@ -72,7 +76,11 @@ const AdminPage = () => {
     navigate('/admin/upload-product');
   };
 
-  if (isLoading) return <p>Loading...</p>; 
+  if (isLoading) {
+    // Show loading state while checking the token
+    return <p>Loading...</p>;
+  }
+
   return (
     <Container>
       <h1>Admin Dashboard</h1>

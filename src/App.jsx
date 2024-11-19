@@ -10,27 +10,27 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import BlogForm from './components/BlogForm';
-import BlogList from './pages/BlogList'; // path fixed
+import BlogList from './pages/BlogList';
 import ProductUpload from './components/ProductUpload'; 
 import { UserProvider } from './components/UserContext';
 
+// Check if the user is authenticated by checking localStorage
 const checkAuth = () => {
   const user = localStorage.getItem('user');
-  try {
-    return user ? JSON.parse(user) : null;
-  } catch (error) {
-    return null;
-  }
+  return user ? JSON.parse(user) : null;  // Return user object or null
 };
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    setIsAuthenticated(checkAuth() !== null);
-  }, []);
+    // Check if the user is authenticated by checking localStorage
+    const user = checkAuth();
+    setIsAuthenticated(user !== null);  // Update the authentication state
+  }, []); // Only run on mount
 
   const handleLogin = (user) => {
+    // Set the user in localStorage and update the state
     localStorage.setItem('user', JSON.stringify(user));
     setIsAuthenticated(true);
   };
@@ -51,9 +51,18 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login setIsAuthenticated={handleLogin} />} />
-            <Route path="/admin" element={isAuthenticated ? <Admin handleLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-            <Route path="/admin/blogs" element={isAuthenticated ? <BlogForm /> : <Navigate to="/login" replace />} />
-            <Route path="/admin/upload-product" element={isAuthenticated ? <ProductUpload /> : <Navigate to="/login" replace />} /> {/* New Product Upload Route */}
+            <Route
+              path="/admin"
+              element={isAuthenticated ? <Admin handleLogout={handleLogout} /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/admin/blogs"
+              element={isAuthenticated ? <BlogForm /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/admin/upload-product"
+              element={isAuthenticated ? <ProductUpload /> : <Navigate to="/login" replace />}
+            />
             <Route path="/blogs" element={<BlogList />} />
           </Routes>
         </AnimatePresence>
