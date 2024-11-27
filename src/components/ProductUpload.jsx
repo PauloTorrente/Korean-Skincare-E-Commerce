@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import usePostApi from '../api/usePostApi';
 
 const Container = styled.div`
   max-width: 600px;
@@ -70,7 +69,6 @@ const ErrorMessage = styled.p`
 `;
 
 const ProductUpload = () => {
-  const { postData, error, isLoading } = usePostApi();
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -78,9 +76,10 @@ const ProductUpload = () => {
     category: '',
     brand: '',
     description: '',
-    image: null,
+    image_url: '', // Image URL instead of file
   });
-  const [fileError, setFileError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,40 +89,44 @@ const ProductUpload = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      if (file.type !== 'image/webp') {
-        setFileError('Only .webp files are allowed.');
-        setFormData({ ...formData, image: null });
-      } else {
-        setFileError('');
-        setFormData({ ...formData, image: file });
-      }
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.image) {
-      alert('Please upload a valid .webp image.');
+    if (!formData.image_url || !formData.image_url.startsWith('http')) {
+      alert('Please enter a valid image URL.');
       return;
     }
 
-    const productData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      productData.append(key, formData[key]);
-    });
+    setIsLoading(true);
+    setError('');
 
-    await postData({
-      route: 'api/products',
-      payload: productData,
-      method: 'POST',
-    });
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No token found.');
+        setIsLoading(false);
+        return;
+      }
 
-    if (!error) {
+      const response = await fetch(
+        'https://korean-skincare-blog-backend.onrender.com/api/products/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        setError(errorResponse.message || `Error: ${response.status}`);
+        setIsLoading(false);
+        return;
+      }
+
       alert('Product uploaded successfully!');
       setFormData({
         name: '',
@@ -132,10 +135,12 @@ const ProductUpload = () => {
         category: '',
         brand: '',
         description: '',
-        image: null,
+        image_url: '',
       });
-    } else {
-      alert(`Failed to upload product: ${error}`);
+      setIsLoading(false);
+    } catch (err) {
+      setError(`Failed to upload product: ${err.message}`);
+      setIsLoading(false);
     }
   };
 
@@ -196,14 +201,14 @@ const ProductUpload = () => {
           required
         />
 
-        <Label>Product Image</Label>
+        <Label>Image URL</Label>
         <Input
-          type="file"
-          name="image"
-          onChange={handleFileChange}
+          type="url"
+          name="image_url"
+          value={formData.image_url}
+          onChange={handleChange}
           required
         />
-        {fileError && <ErrorMessage>{fileError}</ErrorMessage>}
 
         <Button type="submit" disabled={isLoading}>
           {isLoading ? 'Uploading...' : 'Upload Product'}

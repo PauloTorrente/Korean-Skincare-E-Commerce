@@ -35,6 +35,14 @@ const ProductsContainer = styled.div`
     }
   }
 
+  .product-card img {
+    width: 100%;  /* Ensures the image takes the full width of the card */
+    height: 200px;  /* Set a fixed height for the image */
+    object-fit: contain;  /* Ensures the entire image is shown without distortion */
+    max-width: 100%; /* Prevents overflow */
+    border-radius: 8px;
+  }
+
   .product-card h2 {
     font-size: 1.2rem;
     color: #010326;
@@ -78,6 +86,7 @@ const animationSettings = {
 const Products = () => {
   const [products, setProducts] = useState([]);
 
+  // Fetch the products when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -93,6 +102,15 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  // Function to handle imgur URLs and return the correct image URL
+  const getImgurImageUrl = (url) => {
+    // Check if the URL is valid and includes 'imgur.com'
+    if (url && url.includes('imgur.com')) {
+      const imageId = url.split('/').pop();  // Extract image ID from the URL
+      return `https://i.imgur.com/${imageId}.jpg`;  // Use high-quality image
+    }
+  };
+
   return (
     <ProductsContainer>
       <h1>Available Products</h1>
@@ -104,6 +122,7 @@ const Products = () => {
             {...animationSettings}
             transition={{ ...animationSettings.transition, delay: index * 0.1 }}
           >
+            <img src={getImgurImageUrl(product.image)} alt={product.name} />
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <span>€{product.price}</span>

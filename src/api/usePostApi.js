@@ -8,6 +8,7 @@ function usePostApi() {
   // Helper function for making the fetch request
   const postData = async ({ route, payload, method = 'POST' }) => {
     setIsLoading(true);
+    console.log('Payload being sent:', payload); 
 
     try {
       const token = localStorage.getItem('token');
@@ -16,25 +17,33 @@ function usePostApi() {
         return;
       }
 
+      // Determine headers based on payload type
+      const isFormData = payload instanceof FormData;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+      };
+
+      // Ensure the URL is correctly constructed with the full path
       const response = await fetch(`https://korean-skincare-blog-backend.onrender.com/${route}`, {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: method === 'DELETE' ? null : JSON.stringify(payload),
+        headers,
+        body: method === 'DELETE' ? null : isFormData ? payload : JSON.stringify(payload),
       });
 
       if (!response.ok) {
         const errorResponse = await response.json();
+        console.error('Error Response:', errorResponse); 
         setError(errorResponse.message || `Error sending data: ${response.status}`);
         return;
       }
 
       const responseAsJson = await response.json();
+      console.log('Response received:', responseAsJson); 
       setData(responseAsJson);
     } catch (err) {
       setError(`Error sending data: ${err.message}`);
+      console.error('Error sending data:', err); 
     } finally {
       setIsLoading(false);
     }
