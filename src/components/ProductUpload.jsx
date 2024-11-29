@@ -63,6 +63,20 @@ const Button = styled.button`
   }
 `;
 
+const RemoveButton = styled.button`
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #e57373;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  &:hover {
+    background-color: #d32f2f;
+  }
+`;
+
 const ErrorMessage = styled.p`
   color: red;
   font-size: 14px;
@@ -72,33 +86,59 @@ const ProductUpload = () => {
   const [formData, setFormData] = useState({
     name: '',
     price: '',
-    inStock: true,
+    inStock: true,  // Ensure inStock is always set to true or false
     category: '',
     brand: '',
     description: '',
-    image_url: '', // Image URL instead of file
+    images: [],
   });
+  const [imageInput, setImageInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,  // Handle checkbox separately
     });
+    console.log(`Updated field ${name}:`, value); // Log field change
+  };
+
+  const handleImageAdd = () => {
+    console.log('Adding image:', imageInput); // Log image input value
+    if (imageInput.trim() && imageInput.startsWith('http')) {
+      setFormData((prev) => ({
+        ...prev,
+        images: [...prev.images, imageInput],
+      }));
+      setImageInput('');
+      setError(''); // Clear previous error
+    } else {
+      setError('Please enter a valid image URL that starts with "http".');
+    }
+  };
+
+  const handleImageRemove = (index) => {
+    console.log(`Removing image at index ${index}`); // Log image removal
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Form data before submit:', formData); // Log the form data
 
-    if (!formData.image_url || !formData.image_url.startsWith('http')) {
-      alert('Please enter a valid image URL.');
+    if (formData.images.length === 0) {
+      setError('At least one image URL is required.');
+      console.log('Error: No images added');
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    setError(''); // Clear previous errors
 
     try {
       const token = localStorage.getItem('token');
@@ -108,6 +148,12 @@ const ProductUpload = () => {
         return;
       }
 
+      console.log('Sending API request...');
+      const formattedData = {
+        ...formData,
+        image_urls: formData.images,  // Update to match the API's expected field
+      };
+
       const response = await fetch(
         'https://korean-skincare-blog-backend.onrender.com/api/products/',
         {
@@ -116,29 +162,38 @@ const ProductUpload = () => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formattedData),
         }
       );
 
+      const responseData = await response.json();
+      console.log('API Response:', responseData); // Log the full API response
+
       if (!response.ok) {
-        const errorResponse = await response.json();
-        setError(errorResponse.message || `Error: ${response.status}`);
+        console.error('Failed API Request:', responseData);
+        setError(responseData.message || 'Failed to upload product.');
         setIsLoading(false);
         return;
       }
 
-      alert('Product uploaded successfully!');
-      setFormData({
-        name: '',
-        price: '',
-        inStock: true,
-        category: '',
-        brand: '',
-        description: '',
-        image_url: '',
-      });
-      setIsLoading(false);
+      if (responseData.success) {
+        alert('Product uploaded successfully!');
+        setFormData({
+          name: '',
+          price: '',
+          inStock: true,
+          category: '',
+          brand: '',
+          description: '',
+          images: [],
+        });
+        setIsLoading(false);
+      } else {
+        setError('Failed to upload product: ' + (responseData.message || 'Unknown error'));
+        setIsLoading(false);
+      }
     } catch (err) {
+      console.log('Error during product upload:', err);
       setError(`Failed to upload product: ${err.message}`);
       setIsLoading(false);
     }
@@ -201,16 +256,29 @@ const ProductUpload = () => {
           required
         />
 
-        <Label>Image URL</Label>
+        <Label>Image URLs</Label>
         <Input
           type="url"
-          name="image_url"
-          value={formData.image_url}
-          onChange={handleChange}
-          required
+          placeholder="Add an image URL"
+          value={imageInput}
+          onChange={(e) => setImageInput(e.target.value)}
         />
+        <Button type="button" onClick={handleImageAdd}>
+          Add Image
+        </Button>
 
-        <Button type="submit" disabled={isLoading}>
+        <ul>
+          {formData.images.map((url, index) => (
+            <li key={index}>
+              {url}{' '}
+              <RemoveButton type="button" onClick={() => handleImageRemove(index)}>
+                Remove
+              </RemoveButton>
+            </li>
+          ))}
+        </ul>
+
+        <Button type="submit" disabled={isLoading || formData.images.length === 0}>
           {isLoading ? 'Uploading...' : 'Upload Product'}
         </Button>
       </Form>
