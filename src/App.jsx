@@ -5,32 +5,30 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import BlogForm from './components/BlogForm';
 import BlogList from './pages/BlogList';
-import ProductUpload from './components/ProductUpload'; 
+import ProductUpload from './components/ProductUpload';
 import { UserProvider } from './components/UserContext';
 
-// Check if the user is authenticated by checking localStorage
 const checkAuth = () => {
   const user = localStorage.getItem('user');
-  return user ? JSON.parse(user) : null;  // Return user object or null
+  return user ? JSON.parse(user) : null;
 };
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if the user is authenticated by checking localStorage
     const user = checkAuth();
-    setIsAuthenticated(user !== null);  // Update the authentication state
-  }, []); // Only run on mount
+    setIsAuthenticated(user !== null);
+  }, []);
 
   const handleLogin = (user) => {
-    // Set the user in localStorage and update the state
     localStorage.setItem('user', JSON.stringify(user));
     setIsAuthenticated(true);
   };
@@ -48,6 +46,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login setIsAuthenticated={handleLogin} />} />

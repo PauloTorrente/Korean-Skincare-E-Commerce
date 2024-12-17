@@ -97,22 +97,10 @@ const MotionMenu = styled(motion.div)`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('token'));
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  const handleLogout = () => {
-    console.log('Logging out...');
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    setToken(null); // Update the token state
-  };
-
-  useEffect(() => {
-    setToken(localStorage.getItem('token'));
-  }, []);
 
   return (
     <NavbarContainer>
@@ -126,14 +114,6 @@ const Navbar = () => {
       </div>
 
       <div className="nav-links">
-        {token ? (
-          <>
-            <Link to="/admin">Admin</Link>
-            <Link to="/" onClick={handleLogout}>Logout</Link>
-          </>
-        ) : (
-          <Link to="/login">Login</Link>
-        )}
         <Link to="/products">Productos</Link>
         <Link to="/about">Sobre Nosotros</Link>
         <Link to="/contact">Contacto</Link>

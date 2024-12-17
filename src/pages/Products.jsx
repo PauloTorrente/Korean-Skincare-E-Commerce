@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { Link } from 'react-router-dom';  
 
 const ProductsContainer = styled.div`
   padding: 2rem;
@@ -33,13 +34,19 @@ const ProductsContainer = styled.div`
     &:hover {
       transform: translateY(-10px);
     }
+
+    a {
+      text-decoration: none;
+      color: inherit; /* Mantém o estilo do texto no link */
+      display: block;
+    }
   }
 
   .product-card img {
-    width: 100%;  /* Ensures the image takes the full width of the card */
-    height: 200px;  /* Set a fixed height for the image */
-    object-fit: contain;  /* Ensures the entire image is shown without distortion */
-    max-width: 100%; /* Prevents overflow */
+    width: 100%; 
+    height: 200px;  
+    object-fit: contain;  
+    max-width: 100%; 
     border-radius: 8px;
   }
 
@@ -122,16 +129,18 @@ const Products = () => {
             {...animationSettings}
             transition={{ ...animationSettings.transition, delay: index * 0.1 }}
           >
-            {/* Display only the first image */}
-            {product.images && product.images[0] && (
-              <img
-                src={getImgurImageUrl(product.images[0])}
-                alt="Product image"
-              />
-            )}
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <span>€{product.price}</span>
+            {/* Card clicável */}
+            <Link to={`/products/${product.id}`}>
+              {/* Display only the first image */}
+              {product.images && product.images[0] && (
+                <img
+                  src={getImgurImageUrl(product.images[0])}
+                  alt="Product image"
+                />
+              )}
+              <h2>{product.name}</h2>
+              <span>€{product.price}</span>
+            </Link>
           </motion.div>
         ))}
       </div>
